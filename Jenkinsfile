@@ -16,11 +16,13 @@ pipeline {
       steps {
       sh 'mvn clean package'
        }
-    }   
+    }
     stage ('Deploy-To-Tomcat') {
        steps {
-          sh 'sshpass -p 'toor' scp target/*.war root@192.168.56.101:/tomcat/apache-tomcat-8.5.57/webapps/webapp.war'     
-       }       
-    }
+           sshagent(['tomcat']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@13.234.20.145:/tomcat/apache-tomcat-8.5.57/webapps/webapp.war'
+              }      
+           }       
+      }
    }  
 }

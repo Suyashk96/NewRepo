@@ -45,5 +45,12 @@ pipeline {
               }      
            }       
       }
+    
+    stage ('DAST') {
+      steps {
+         sh 'docker run frapsoft/nikto -host http://13.234.204.86:8080/webapp/ > nikto'
+         sh 'cat nikto'
+      }
+    }
    }  
 }
